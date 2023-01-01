@@ -10,8 +10,9 @@
   // When we navigate away from the homepage, navigate the top level instead
   const currTab = await browser.tabs.getCurrent()
   browser.webNavigation.onBeforeNavigate.addListener(e => {
+    const isNotHomepage = e.url.indexOf(homepageRaw) === -1;
     console.log(e)
-    if (e.tabId === currTab.id && e.frameId !== 0 && e.parentFrameId === 0) {
+    if (e.tabId === currTab.id && e.frameId !== 0 && e.parentFrameId === 0 && isNotHomepage) {
       window.location.href = e.url
     }
   })
